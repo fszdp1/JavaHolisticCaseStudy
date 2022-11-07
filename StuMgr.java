@@ -6,9 +6,9 @@ import java.io.*;
 public class StuMgr {
 	static final String FILE = ".\\Students.data";//存放学生数据的文件路径
 	static int selection;
-	static Scanner sc = new Scanner(System.in);
-	static ArrayList learners = new ArrayList(); //使用ArrayList集合存放学习者，代码大大简化
-	//static Students learners = new Students();  //使用自定义集合类Students
+	static Scanner scanner = new Scanner(System.in);
+	//static ArrayList<Student> learners = new ArrayList<Student>(); //使用ArrayList集合存放学习者，代码大大简化
+	static Students learners = new Students();  //使用自定义集合类Students
 	
 	public static void main(String[] args) {
 		//如果存在存放数据的文件，则先从文件中读取数据
@@ -17,8 +17,8 @@ public class StuMgr {
 			try{
 				FileInputStream fis = new FileInputStream(f);
 				ObjectInputStream ois = new ObjectInputStream(fis);
-				learners = (ArrayList)ois.readObject();  //使用ArrayList集合类
-				//learners = (Students)ois.readObject(); //使用自定义Students集合类
+				//learners = (ArrayList<Student>)ois.readObject();  //使用ArrayList集合类
+				learners = (Students)ois.readObject(); //使用自定义Students集合类
 				ois.close();
 				fis.close();
 			}
@@ -33,7 +33,7 @@ public class StuMgr {
 			switchFunc();
 		}
 		System.out.println("Operation ended. Bye!");
-		sc.close();
+		scanner.close();
 	}
 	private static void menuLoop() {
 		System.out.println("Operation Menu:");
@@ -66,12 +66,12 @@ public class StuMgr {
 				break;
 			case 3:
 				System.out.println("Exam course: ");
-				c = sc.next();
+				c = scanner.next();
 				takeExam(c);
 				break;
 			case 4:
 				System.out.println("Course: ");
-				c = sc.next();
+				c = scanner.next();
 				queryScores(c);
 				break;
 			case 5:
@@ -111,17 +111,18 @@ public class StuMgr {
 		System.out.println("Name\tGender\tClass\tChinese\tMaths\tEnglish\tPhysics\tChemistry");
 		for(Object o : learners){
 			Student s = (Student)o;
-			System.out.print(s.getName()+"\t");
-			System.out.print(s.getSex()+"\t");
-			System.out.print(s.getClsName()+"\t");
-			System.out.print(s.queryExam("Chinese")+"\t");
-			System.out.print(s.queryExam("Maths")+"\t");
-			System.out.print(s.queryExam("English")+"\t");
-			int t = s.queryExam("Physics");
-			System.out.print((t >= 0 ? t : "--") + "\t");
-			t = s.queryExam("Chemistry");
-			System.out.print((t >= 0 ? t : "--") + "\t");
-			System.out.print("\n");
+//			System.out.print(s.getName()+"\t");
+//			System.out.print(s.getSex()+"\t");
+//			System.out.print(s.getClsName()+"\t");
+//			System.out.print(s.queryExam("Chinese")+"\t");
+//			System.out.print(s.queryExam("Maths")+"\t");
+//			System.out.print(s.queryExam("English")+"\t");
+//			int t = s.queryExam("Physics");
+//			System.out.print((t >= 0 ? t : "--") + "\t");
+//			t = s.queryExam("Chemistry");
+//			System.out.print((t >= 0 ? t : "--") + "\t");
+//			System.out.print("\n");
+			System.out.println(s.toString());
 		}
 		System.out.print("\n");
 	}
@@ -152,12 +153,12 @@ public class StuMgr {
 			else
 				s = new MiddleStudent(); //MiddleStudent对象赋值给Student数组元素
 			try{
-				s.inputStudent(sc);  //此处表现出多态性
+				s.inputStudent(scanner);  //此处表现出多态性
 				learners.add(s);    //向ArrayList集合添加元素
 			}
 			catch(InputMismatchException ime){
 				System.out.println("Content or format wrong!");
-				sc.nextLine();//此行代码消耗掉输入缓冲的一行信息，以免后面输入再次引发异常
+				scanner.nextLine();//此行代码消耗掉输入缓冲的一行信息，以免后面输入再次引发异常
 			}
 			catch(ScoreException se){
 				System.out.println(se.getMessage()+"——"+se.getCourseName()+":"+se.getErrorValue());
@@ -179,7 +180,7 @@ public class StuMgr {
 				System.out.println("Input invalid!");
 		}
 		try{
-			((Student)learners.get(sno-1)).modifyStudent(sc);//利用多态性避免了选择结构
+			((Student)learners.get(sno-1)).modifyStudent(scanner);//利用多态性避免了选择结构
 		}
 		catch(ScoreException se){
 			System.out.println(se.getMessage()+"——"+se.getCourseName()+":"+se.getErrorValue());
@@ -224,7 +225,7 @@ public class StuMgr {
 		Pattern p = Pattern.compile(intPattern);  //正则表达式模式
 		String s;
 		while(true){
-			s = sc.next();
+			s = scanner.next();
 			if(p.matcher(s).matches()) //字符串s如果符合模式，即为合法正整数
 				break;
 			else

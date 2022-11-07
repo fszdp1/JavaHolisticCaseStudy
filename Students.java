@@ -4,16 +4,16 @@ import java.io.*;
 public class Students implements Collection, Serializable{
 	private static final long serialVersionUID = 19928390L;
 	private Student[] students = new Student[10];
-	private int Capacity = 10;
+	private int capacity = 10;
 	private int increment = 10;
 	private int size = 0;
 	public Students(){  }
 	public Students(int initCapacity){
-		this.Capacity = initCapacity;
+		this.capacity = initCapacity;
 		students = new Student[initCapacity];
 	}
 	public Students(int initCapacity, int increment){
-		this.Capacity = initCapacity;
+		this.capacity = initCapacity;
 		this.increment = increment;
 		students = new Student[initCapacity];
 	}
@@ -94,10 +94,10 @@ public class Students implements Collection, Serializable{
 		// TODO Auto-generated method stub
 		if(!(e instanceof Student))
 			return false;
-		if(size == this.Capacity){
+		if(size == this.capacity){
 			Student[] tmp = Arrays.copyOf(students, size);
-			this.Capacity += this.increment;
-			students = new Student[this.Capacity];
+			this.capacity += this.increment;
+			students = new Student[this.capacity];
 			System.arraycopy(tmp, 0, students, 0, size);
 		}
 		students[size++]=(Student)e;
@@ -137,10 +137,10 @@ public class Students implements Collection, Serializable{
 			if(!(o instanceof Student))
 				return false;
 		}
-		if(c.size()>this.Capacity-size){
+		if(c.size()>this.capacity-size){
 			Student[] tmp = Arrays.copyOf(students, size);
-			this.Capacity += c.size();
-			students = new Student[this.Capacity];
+			this.capacity += c.size();
+			students = new Student[this.capacity];
 			System.arraycopy(tmp, 0, students, 0, size);
 			System.arraycopy(c, 0,students, size, c.size());
 			size += c.size();

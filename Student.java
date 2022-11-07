@@ -8,7 +8,7 @@ public class Student implements Learner, Serializable{
 	private char sex;
 	private int chineseScore;
 	private int englishScore;
-	private int mathScore;
+	private int mathsScore;
 	public Student(){
 		
 	}
@@ -21,7 +21,7 @@ public class Student implements Learner, Serializable{
 		this(nm, cls, gender);
 		this.chineseScore = cScore;
 		this.englishScore = eScore;
-		this.mathScore = mScore;
+		this.mathsScore = mScore;
 	}
 	public String getName(){return name;}
 	public String getClsName(){return clsName;}
@@ -44,7 +44,7 @@ public class Student implements Learner, Serializable{
 	}
 	public void setMathScore(int mScore){
 		if(mScore>=0){
-			this.mathScore = mScore;
+			this.mathsScore = mScore;
 		}
 		else{
 			throw new ScoreException("Maths", mScore);
@@ -55,7 +55,7 @@ public class Student implements Learner, Serializable{
 		System.out.println("Class: "+this.clsName);
 		System.out.println("Gender: "+this.sex);
 		System.out.println("Chinese: "+this.chineseScore);
-		System.out.println("Maths: "+this.mathScore);
+		System.out.println("Maths: "+this.mathsScore);
 		System.out.println("English: "+this.englishScore);
 	}
 	public void inputStudent(Scanner sc){
@@ -83,7 +83,7 @@ public class Student implements Learner, Serializable{
 		if(course.equals("Chinese"))
 			return this.chineseScore;
 		else if(course.equals("Maths"))
-			return this.mathScore;
+			return this.mathsScore;
 		else if(course.equals("English"))
 			return this.englishScore;
 		else
@@ -117,7 +117,7 @@ public class Student implements Learner, Serializable{
 		stringIn = sc.nextLine();
 		if(!stringIn.equals(""))
 			this.setChineseScore(Integer.parseInt(stringIn));
-		System.out.print("Maths: "+this.mathScore);
+		System.out.print("Maths: "+this.mathsScore);
 		stringIn = sc.nextLine();
 		if(!stringIn.equals(""))
 			this.setMathScore(Integer.parseInt(stringIn));
@@ -125,5 +125,12 @@ public class Student implements Learner, Serializable{
 		stringIn = sc.nextLine();
 		if(!stringIn.equals(""))
 			this.setEnglishScore(Integer.parseInt(stringIn));
+	}
+	@Override
+	public String toString() {
+		String str = this.getName() + "\t" + this.getSex() + "\t" + this.getClsName() + "\t" 
+			+ this.queryExam("Chinese") + "\t" + this.queryExam("Maths") + "\t" 
+			+ this.queryExam("English");
+		return str;
 	}
 }

@@ -2,7 +2,7 @@ package Students;
 import java.util.Scanner;
 public class MiddleStudent extends Student {
 	private int physicsScore;
-	private int chemicalScore;
+	private int chemistryScore;
 	public MiddleStudent(){} //无参数构造方法
 	public MiddleStudent(String nm, String cls, char gender){
 		super(nm,cls,gender);  //调用基类构造方法
@@ -13,7 +13,7 @@ public class MiddleStudent extends Student {
 	public MiddleStudent(String nm, String cls, char gender, int cScore, int eScore, int mScore, int pScore, int chScore){
 		this(nm,cls,gender,cScore,eScore,mScore);//调用自己的构造方法
 		this.physicsScore = pScore;
-		this.chemicalScore = chScore;
+		this.chemistryScore = chScore;
 	}
 	public void setPhysicsScore(int pScore){
 		if(pScore>=0)
@@ -23,14 +23,14 @@ public class MiddleStudent extends Student {
 	}
 	public void setChemicalScore(int chScore){
 		if(chScore>=0)
-			this.chemicalScore = chScore;
+			this.chemistryScore = chScore;
 		else
 			throw new ScoreException("Chemistry", chScore);
 	}
 	public void dispStudent(){ //此方法重写或覆盖基类方法
 		super.dispStudent();   //调用基类被覆盖方法
 		System.out.println("Physics: "+this.physicsScore);
-		System.out.println("Chemistry: "+this.chemicalScore);
+		System.out.println("Chemistry: "+this.chemistryScore);
 	}
 	public void inputStudent(Scanner sc){ //此方法重写或覆盖基类方法
 		super.inputStudent(sc);  //调用基类被覆盖方法
@@ -44,7 +44,7 @@ public class MiddleStudent extends Student {
 		if(course.equals("Physics"))
 			return this.physicsScore;
 		else if(course.equals("Chemistry"))
-			return this.chemicalScore;
+			return this.chemistryScore;
 		else
 			return super.queryExam(course);//调用基类的被重写方法，用super
 	}
@@ -55,9 +55,14 @@ public class MiddleStudent extends Student {
 		stringIn = sc.nextLine();
 		if(!stringIn.equals(""))
 			this.setPhysicsScore(Integer.parseInt(stringIn));
-		System.out.print("Chemistry: "+this.chemicalScore);
+		System.out.print("Chemistry: "+this.chemistryScore);
 		stringIn = sc.nextLine();
 		if(!stringIn.equals(""))
 			this.setChemicalScore(Integer.parseInt(stringIn));
+	}
+	@Override
+	public String toString() {
+		String str = super.toString() + "\t" + this.queryExam("Physics") + "\t" + this.queryExam("Chemistry");
+		return str;
 	}
 }
